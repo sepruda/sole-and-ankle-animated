@@ -1,13 +1,19 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
+
+const NavComponent = ({ href, text }) => (
+  <NavLink href={href}>
+    <NavText data-hover={text}>{text}</NavText>
+  </NavLink>
+);
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -20,12 +26,12 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavComponent href="/sale" text="Sale" />
+          <NavComponent href="/new" text="New Releases" />
+          <NavComponent href="/men" text="Men" />
+          <NavComponent href="/women" text="Women" />
+          <NavComponent href="/kids" text="Kids" />
+          <NavComponent href="/collections" text="Collection" />
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -114,15 +120,37 @@ const Filler = styled.div`
   }
 `;
 
+const NavText = styled.span`
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s;
+  outline: none;
+  text-decoration: none;
+  will-change: transform;
+
+  &::before {
+    content: attr(data-hover);
+    position: absolute;
+    top: 100%;
+    font-weight: ${WEIGHTS.bold};
+  }
+`;
+
 const NavLink = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
+  height: 1.125em;
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+
+  &:hover ${NavText}, &:focus ${NavText} {
+    transform: translateY(-100%);
   }
 `;
 
