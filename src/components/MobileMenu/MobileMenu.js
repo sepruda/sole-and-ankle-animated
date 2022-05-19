@@ -85,12 +85,15 @@ const Content = styled(DialogContent)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
-  animation: ${slideIn} 500ms ease-out both;
-  animation-delay: 200ms;
 
-  & > * {
-    animation: ${fadeIn} 600ms backwards;
-    animation-delay: 300ms;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${slideIn} 500ms ease-out both;
+    animation-delay: 200ms;
+
+    & > * {
+      animation: ${fadeIn} 600ms backwards;
+      animation-delay: 300ms;
+    }
   }
 `;
 
